@@ -1,0 +1,8 @@
+{
+  "name": "EduSafe: Bullying Prevention Platform",
+  "description": "An inclusive, gamified platform for schools to prevent bullying through socio-emotional learning, conflict mediation, and real-time management dashboards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
