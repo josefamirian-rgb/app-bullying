@@ -7,18 +7,41 @@ import { ProfessorDashboard } from './views/ProfessorDashboard';
 import { EstudanteDashboard } from './views/EstudanteDashboard';
 import { FamiliaDashboard } from './views/FamiliaDashboard';
 import { ApoioDashboard } from './views/ApoioDashboard';
+import { WelcomeScreen } from './views/WelcomeScreen';
 import { StudentDossierModal } from './components/StudentDossierModal';
 import { NewSafeReportModal } from './components/NewSafeReportModal';
 import { NewMediationModal } from './components/NewMediationModal';
 import { PedagogicalGuideModal } from './components/PedagogicalGuideModal';
 import { OfficialReportModal } from './components/OfficialReportModal';
-import { ShieldCheck, Heart, FileText } from 'lucide-react';
+import { ShieldCheck, Heart, FileText, ArrowLeft, Sparkles } from 'lucide-react';
 
 const DashboardContent: React.FC = () => {
-  const { currentRole } = useApp();
+  const { currentRole, showWelcomeScreen, setShowWelcomeScreen } = useApp();
+
+  if (showWelcomeScreen) {
+    return <WelcomeScreen />;
+  }
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      {/* Return to Entrance Screen quick floating bar */}
+      <div className="mb-6 flex items-center justify-between bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-slate-200/80 shadow-2xs">
+        <button
+          onClick={() => setShowWelcomeScreen(true)}
+          className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-violet-700 transition-colors group"
+        >
+          <div className="w-6 h-6 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <ArrowLeft className="w-3.5 h-3.5" />
+          </div>
+          <span>Voltar à Tela Inicial Colorida</span>
+        </button>
+
+        <span className="text-[11px] font-bold text-slate-400 hidden sm:inline flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+          Perfil Ativo: <strong className="text-slate-700 capitalize">{currentRole}</strong>
+        </span>
+      </div>
+
       {currentRole === 'estudante' && <EstudanteDashboard />}
       {currentRole === 'professor' && <ProfessorDashboard />}
       {currentRole === 'orientador' && <OrientadorDashboard />}

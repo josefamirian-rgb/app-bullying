@@ -59,6 +59,9 @@ interface AppContextType {
 
   isOfficialReportOpen: boolean;
   setIsOfficialReportOpen: (open: boolean) => void;
+
+  showWelcomeScreen: boolean;
+  setShowWelcomeScreen: (show: boolean) => void;
   
   // Actions
   addIncident: (data: {
@@ -121,6 +124,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isMediationModalOpen, setIsMediationModalOpen] = useState(false);
   const [selectedProposal, setSelectedProposal] = useState<PedagogicalProposal | null>(null);
   const [isOfficialReportOpen, setIsOfficialReportOpen] = useState(false);
+  const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
 
   const currentUser = mockUsers[currentRole] || mockUsers['estudante'];
 
@@ -395,6 +399,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setSelectedProposal,
         isOfficialReportOpen,
         setIsOfficialReportOpen,
+        showWelcomeScreen,
+        setShowWelcomeScreen,
         addIncident,
         updateIncidentStatus,
         addMediation,

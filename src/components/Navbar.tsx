@@ -22,7 +22,9 @@ export const Navbar: React.FC = () => {
     currentUser, 
     setIsReportModalOpen, 
     setIsOfficialReportOpen,
-    earlyWarnings
+    earlyWarnings,
+    showWelcomeScreen,
+    setShowWelcomeScreen
   } = useApp();
 
   const roleConfig: Record<UserRole, { 
@@ -92,8 +94,12 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-16 gap-3">
           
           {/* Logo & Brand with vibrant colors */}
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 via-pink-500 to-amber-400 flex items-center justify-center text-white shadow-md shadow-pink-200">
+          <button 
+            onClick={() => setShowWelcomeScreen(true)}
+            className="flex items-center gap-3 shrink-0 text-left hover:opacity-95 transition-all group"
+            title="Ir para a Tela Inicial Animada"
+          >
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 via-pink-500 to-amber-400 flex items-center justify-center text-white shadow-md shadow-pink-200 group-hover:scale-105 transition-transform">
               <ShieldCheck className="w-6 h-6 drop-shadow-xs" />
             </div>
             <div>
@@ -109,18 +115,38 @@ export const Navbar: React.FC = () => {
                 Plataforma Escolar de Convivência, Inclusão & Anti-Bullying
               </p>
             </div>
-          </div>
+          </button>
 
           {/* Quick Role Switcher Bar */}
           <div className="flex items-center bg-slate-100/80 p-1 rounded-2xl border border-slate-200 overflow-x-auto max-w-full">
+            {/* Dedicated Welcome/Home Screen Tab */}
+            <button
+              id="nav-home-btn"
+              onClick={() => setShowWelcomeScreen(true)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+                showWelcomeScreen
+                  ? 'bg-gradient-to-r from-violet-600 via-pink-500 to-amber-500 text-white shadow-md'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+              }`}
+              title="Tela Inicial Animada"
+            >
+              <Sparkles className={`w-4 h-4 ${showWelcomeScreen ? 'text-amber-300 animate-spin' : 'text-slate-400'}`} />
+              <span>Início</span>
+            </button>
+
+            <span className="w-px h-4 bg-slate-300 mx-1 shrink-0"></span>
+
             {rolesList.map((role) => {
-              const active = currentRole === role;
+              const active = !showWelcomeScreen && currentRole === role;
               const conf = roleConfig[role];
               return (
                 <button
                   key={role}
                   id={`role-switcher-${role}`}
-                  onClick={() => setCurrentRole(role)}
+                  onClick={() => {
+                    setCurrentRole(role);
+                    setShowWelcomeScreen(false);
+                  }}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
                     active
                       ? conf.activeStyle
